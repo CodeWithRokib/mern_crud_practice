@@ -4,6 +4,7 @@ import productRoute from './src/routes/productRoute.js'
 const app = express();
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/v1',userRoute);
 app.use('/api/v1',productRoute);
