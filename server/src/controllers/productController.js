@@ -1,6 +1,7 @@
 import Product from "../models/productModel.js";
 
 export const getAllProduct = async (req, res) => {
+
   try {
     const products = await Product.find({});
     res.status(200).send({
@@ -19,7 +20,15 @@ export const getAllProduct = async (req, res) => {
 
 export const createProduct = async (req, res) => {
   try {
-    const products = new Product(req.body);
+    const { name, description, price } = req.body;
+    const imagePath = req.file ? req.file.path : null; // File path saved on the server
+
+    const products = new Product({
+      name,
+      description,
+      price,
+      image: imagePath,
+    });
     await products.save();
     res.status(201).send({
       success: true,
@@ -38,8 +47,9 @@ export const createProduct = async (req, res) => {
 export const productUpdate = async (req, res) => {
   try {
     const productId = req.params.id;
-    const productData = req.body;
-    const products = await Product.findByIdAndUpdate(productId, productData, {
+    const {name,description,price} = req.body;
+    const imagePath = req.file ? req.file.path : null;
+    const products = await Product.findByIdAndUpdate(productId,{name,description,price,image:imagePath },{
       new: true,
     });
     if (!products) {

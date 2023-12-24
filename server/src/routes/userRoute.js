@@ -14,6 +14,8 @@ import {
 
 const router = express.Router();
 
+
+
 router.get("/user", getAllUser);
 router.get("/user/:id", getUserById);
 router.delete("/user/:id", deleteUser);
